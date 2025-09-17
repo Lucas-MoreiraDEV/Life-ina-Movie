@@ -1,0 +1,46 @@
+<%- include("partials/header")  %>
+<main>
+    <h2 class="titulo">Descubra</h2>
+    <% locals.pagina.results.forEach(film => { %>
+        <div class="cardFilm">
+            <img src="https://image.tmdb.org/t/p/w500<%= film.poster_path %>" alt="">
+            <h3>
+                <%= film.original_title %>
+            </h3>
+            <div class="nota">
+                <span><%= film.vote_average %></span>
+            </div>
+        </div>
+    <%    }); %>
+
+    <div class="paginacao">
+        <%
+        const paginaAtual = pagina.page;
+        const totalPaginas = pagina.total_pages;
+        const paginaAnterior = Math.max(1, paginaAtual - 2);
+        const proximaPagina = Math.min(totalPaginas, paginaAtual + 2);
+        %>
+        <% if (paginaAnterior > 1) { %>
+            <a href="/?page=1">1</a>
+            <% if (paginaAnterior > 2) { %>
+                <span>...</span>
+            <% } %>
+        <% } %>
+
+        <% for (let i = paginaAnterior; i <= proximaPagina; i++) { %>
+            <% if (i === paginaAtual) { %>
+                <span class="current"><%= i %></span>
+            <% } else { %>
+                <a href="/?pag=<%= i %>"><%= i %></a>
+            <% } %>
+        <% } %>
+
+        <% if (proximaPagina < totalPaginas) { %>
+            <% if (proximaPagina < totalPaginas - 1) { %>
+                <span>...</span>
+            <% } %>
+            <a href="/?pag=<%= totalPaginas -1 %>"><%= totalPaginas %></a>
+        <% } %>
+    </div>
+</main>
+<%- include("partials/footer") %>
