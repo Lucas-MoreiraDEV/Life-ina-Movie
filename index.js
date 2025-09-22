@@ -11,9 +11,7 @@ const config = {
         Authorization: `Bearer ${bearerToken}`,
     }
 }
-
-
-
+let language = "pt-BR"
 
 
 app.set("view engine", "ejs");
@@ -22,7 +20,7 @@ app.use(express.static("public"));
 app.get("/", async (req, res) => {
     const paginaAtual = req.query.pag || 1;
     try {
-        let response = await axios.get(url + "movie/popular?page=" + paginaAtual, config)
+        let response = await axios.get(url + "movie/popular?page=" + paginaAtual + "&include_adult=false" + "&language=" + language, config)
         let data = response.data
         res.render("index", { pagina: data});
     } catch (error) {
@@ -30,6 +28,30 @@ app.get("/", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+app.get("/movie/:id", async (req, res) => {
+    const movieID = req.params.id;
+    try {
+        const response = await axios.get(url + "movie/" + movieID + "?language=" + language, config);
+        const data = response.data;
+        res.render("filme", { filme: data});
+    } catch (error) {
+        console.error("Error fetching movie details from TMDB API:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.get("/search", async (req, res) => {
+    const search = req.query.pesquisa;
+    try {
+        const response = await axios.get(url + "search/movie?query=" + search + "&include_adult=false" + "&language=" + language, config);
+        const data = response.data;
+        res.render("index", { pagina: data } );
+    } catch (error) {
+        console.error("Error fetching search results from TMDB API:", error);
+        res.status(500).send("Internal Server Error");
+    }
+})
 
 
 app.listen(PORT, () => {

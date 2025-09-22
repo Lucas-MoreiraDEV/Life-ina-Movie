@@ -2,15 +2,15 @@
 <main>
     <h2 class="titulo">Descubra</h2>
     <% locals.pagina.results.forEach(film => { %>
-        <div class="cardFilm">
+        <a href="/movie/<%= film.id %>" class="cardFilm">
             <img src="https://image.tmdb.org/t/p/w500<%= film.poster_path %>" alt="">
             <h3>
-                <%= film.original_title %>
+                <%= film.title %>
             </h3>
             <div class="nota">
                 <span><%= film.vote_average %></span>
             </div>
-        </div>
+        </a>
     <%    }); %>
 
     <div class="paginacao">
