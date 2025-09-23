@@ -1,6 +1,6 @@
 <%- include("partials/header")  %>
 <main>
-    <h2 class="titulo">Descubra</h2>
+    <h2 class="titulo--Filme">Descubra </h2>
     <% locals.pagina.results.forEach(film => { %>
         <a href="/movie/<%= film.id %>" class="cardFilm">
             <img src="https://image.tmdb.org/t/p/w500<%= film.poster_path %>" alt="">

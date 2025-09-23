@@ -1,15 +1,30 @@
-<%- include("partials/header")  %>
+<%- include("partials/header") %>
 
-<section >
-    <h2>Titulo original : <%= filme.original_title %></h2>
-    <h2>Titulo : <%= filme.title %></h2>
-    <img src="https://image.tmdb.org/t/p/w500<%= filme.poster_path %>" alt="">
-    <h3>Visão geral</h3>
-    <p><%= filme.overview %></p>
-    <h3>Popularidade : <%= filme.popularity %></h3>
-    <h3>Data de lançamento : <%= filme.release_date %></h3>
-    <h3>Nota : <%= filme.vote_average %></h3>
-    <img src="https://image.tmdb.org/t/p/w500<%= filme.backdrop_path %>" alt="">
-</section>
+    <section class="detalhes--filme">
+        <h2 class="tituloF">Titulo original : <%= filme.original_title %>
+        </h2>
+        <h2 class="tituloF">Titulo : <%= filme.title %>
+        </h2>
+        <img src="https://image.tmdb.org/t/p/w500<%= filme.poster_path %>" alt="">
 
-<%- include("partials/footer")  %>
+        <div class="div--detalhes tituloF">
+            <h3>Visão geral</h3>
+            <p>
+                <%= filme.overview %>
+            </p>
+
+            <div class="div--detalhes--info tituloF">
+                <h3>Popularidade :</h3> <p><%= filme.popularity %></p>
+            </div>
+            <div class="div--detalhes--info tituloF">
+                <h3>Data de lançamento : </h3> <p><%= filme.release_date %></p>
+            </div>
+            <div class="div--detalhes--info tituloF">
+                <h3>Nota : </h3> <p><%= filme.vote_average %></p>
+            </div>
+
+        </div>
+        <img src="https://image.tmdb.org/t/p/w500<%= filme.backdrop_path %>" alt="">
+    </section>
+
+    <%- include("partials/footer") %>
