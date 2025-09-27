@@ -1,6 +1,13 @@
 import express from "express";
 import axios from "axios";
 
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const url = "https://api.themoviedb.org/3/"
@@ -15,7 +22,7 @@ let language = "pt-BR"
 
 
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", async (req, res) => {
     const paginaAtual = req.query.pag || 1;
@@ -43,10 +50,11 @@ app.get("/movie/:id", async (req, res) => {
 
 app.get("/search", async (req, res) => {
     const search = req.query.pesquisa;
+    const page = req.query.pag || 1;
     try {
-        const response = await axios.get(url + "search/movie?query=" + search + "&include_adult=false" + "&language=" + language, config);
+        const response = await axios.get(`${url}search/movie?query=${encodeURIComponent(search)}&page=${page}&include_adult=false&language=${language}`, config);
         const data = response.data;
-        res.render("index", { pagina: data } );
+        res.render("index", { pagina: data, pesquisa: search} );
     } catch (error) {
         console.error("Error fetching search results from TMDB API:", error);
         res.status(500).send("Internal Server Error");

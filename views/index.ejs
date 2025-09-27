@@ -17,30 +17,30 @@
         <%
         const paginaAtual = pagina.page;
         const totalPaginas = pagina.total_pages;
-        const paginaAnterior = Math.max(1, paginaAtual - 2);
-        const proximaPagina = Math.min(totalPaginas, paginaAtual + 2);
+        const paginaAnterior = Math.max(1, paginaAtual - 5);
+        const proximaPagina = Math.min(totalPaginas, paginaAtual + 5);
         %>
-        <% if (paginaAnterior > 1) { %>
-            <a href="/?page=1">1</a>
-            <% if (paginaAnterior > 2) { %>
-                <span>...</span>
+
+        <% if (!locals.pesquisa) { %>
+            <% for (let i = paginaAnterior; i <= proximaPagina; i++) { %>
+                <% if (i === paginaAtual) { %>
+                    <span class="current"><%= i %></span>
+                <% } else { %>
+                    <a href="/?pag=<%= i %>"><%= i %></a>
+                <% } %>
+            <% } %>
+
+            <% if (paginaAtual < 6) { %>
+                <% for (let i = proximaPagina; i < 11; i ++) { %>
+                    <a href="/?pag=<%= (i + 1) %>"><%= i + 1 %></a>
+                    <% } %>
             <% } %>
         <% } %>
 
-        <% for (let i = paginaAnterior; i <= proximaPagina; i++) { %>
-            <% if (i === paginaAtual) { %>
-                <span class="current"><%= i %></span>
-            <% } else { %>
-                <a href="/?pag=<%= i %>"><%= i %></a>
-            <% } %>
-        <% } %>
 
-        <% if (proximaPagina < totalPaginas) { %>
-            <% if (proximaPagina < totalPaginas - 1) { %>
-                <span>...</span>
-            <% } %>
-            <a href="/?pag=<%= totalPaginas -1 %>"><%= totalPaginas %></a>
-        <% } %>
+
     </div>
+
+    <script src="/paginacao.js"></script>
 </main>
 <%- include("partials/footer") %>
